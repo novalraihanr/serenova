@@ -1,12 +1,9 @@
 "use client";
 
-const Likert5 = ({ selectedOption, setSelectedOption }) => {
+const LikertTF = ({ selectedOption, setSelectedOption }) => {
     const options = [
-        { id: 'option1', label: 'Never', image: '/assets/images/question/never.png' },
-        { id: 'option2', label: 'Rarely', image: '/assets/images/question/rarely.png' },
-        { id: 'option3', label: 'Sometimes', image: '/assets/images/question/sometimes.png' },
-        { id: 'option4', label: 'Often', image: '/assets/images/question/often.png' },
-        { id: 'option5', label: 'Always', image: '/assets/images/question/always.png' },
+        { id: 'true', label: 'True', image: '/assets/images/question/true.svg' },
+        { id: 'false', label: 'False', image: '/assets/images/question/false.svg' },
     ];
 
     return (
@@ -21,7 +18,7 @@ const Likert5 = ({ selectedOption, setSelectedOption }) => {
                         onChange={() => setSelectedOption(option.id)}
                         className="hidden"
                     />
-                    <div className={`bg-[#A8A8A826] rounded-lg text-center flex flex-col items-center justify-center w-20 sm:w-24 md:w-28 h-auto p-4 ${selectedOption === option.id ? 'border-4 border-[#00B4BE]' : 'border-[#A8A8A826]'}`}>
+                    <div className={`bg-[#A8A8A826] rounded-lg text-center flex flex-col items-center justify-center w-28 sm:w-40 md:w-52 h-auto p-4 ${selectedOption === option.id ? 'border-4 border-[#00B4BE]' : 'border-[#A8A8A826]'}`}>
                         <img 
                             src={option.image} 
                             alt={option.label} 
@@ -35,4 +32,4 @@ const Likert5 = ({ selectedOption, setSelectedOption }) => {
     );
 }
 
-export default Likert5;
+export default LikertTF;
