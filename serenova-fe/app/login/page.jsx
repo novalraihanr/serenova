@@ -1,5 +1,9 @@
 "use client";
 
+import axios from "axios";
+import cookie from "cookie-cutter";
+import axiosFetch from "@lib/axiosFetch";
+
 import Image from "next/image";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -18,8 +22,39 @@ const SignPage = () => {
         router.push('/signin');
     }
 
-    const handleDashboard = () => {
-        router.push('/dashboard');
+    const handleUser = async () => {
+        try {
+            const response = await axiosFetch.get('/api/Authuser');
+
+            if(response.data) {
+                cookie.set('user_id', response.data, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24) });
+                router.push('/dashboard');
+            }else{
+                console.log("No user found")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleFetchLogin = async (e) => {
+        e.preventDefault();
+        const data = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        }
+        try {
+            const response = await axios.post('http://localhost:8000/api/login', data);
+            const result = response.data;
+            if (result.success) {
+                cookie.set('token', result.data.token, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24) });
+                handleUser();
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleForgot = () => {
@@ -85,7 +120,7 @@ const SignPage = () => {
                                 {/* BUTTON LOGIN */}
                                 <button
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
-                                    onClick={handleDashboard}
+                                    onClick={handleFetchLogin}
                                 >
                                     Login
                                 </button>

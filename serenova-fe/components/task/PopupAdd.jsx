@@ -1,5 +1,8 @@
 "use client";
 
+import axiosFetch from "@lib/axiosFetch";
+import cookie from 'cookie-cutter';
+
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
@@ -73,16 +76,27 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         //KUMPUL DATA
         const taskData = {
-            task: taskInput,
-            type: selectedOption,
+            id: cookie.get('user_id'),
+            nama: taskInput,
+            jenis: selectedOption,
             date: selectedDate,
-            startTime: startTime,
-            endTime: endTime,
-            description: textareaRef.current.value,
+            startTime: startTime.format('HH:mm:ss'),
+            endTime: endTime.format('HH:mm:ss'),
+            note: textareaRef.current.value,
         };
+
+        try {
+            const response = axiosFetch.post('/api/jadwal/add', taskData);
+            const result = response.data;
+            alert(result.message);
+        } catch (error) {
+            console.log(error)
+        }
+
+
 
         addTask(taskData); // BALEK KE PARENT
         onClose();
@@ -108,21 +122,21 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
                     onChange={(e) => setTaskInput(e.target.value)}
                 />
                 <div className="grid grid-cols-12 gap-x-1">
-                    {["Working", "Daily", "Workout"].map((option) => {
+                    {["work", "daily", "execise"].map((option) => {
                         const styles = {
-                            "Working": {
+                            "work": {
                                 backgroundColor: selectedOption === option ? "rgba(0, 180, 190, 0.15)" : "rgba(0, 180, 190, 0.15)",
                                 textColor: selectedOption === option ? "#00B4BE" : "#00B4BE",
                                 borderColor: selectedOption === option ? "#00B4BE" : "transparent",
                                 borderWidth: selectedOption === option ? "1px" : "1px"
                             },
-                            "Daily": {
+                            "daily": {
                                 backgroundColor: selectedOption === option ? "rgba(235, 106, 75, 0.15)" : "rgba(235, 106, 75, 0.15)",
                                 textColor: selectedOption === option ? "#EB6A4B" : "#EB6A4B",
                                 borderColor: selectedOption === option ? "#EB6A4B" : "transparent",
                                 borderWidth: selectedOption === option ? "1px" : "1px"
                             },
-                            "Workout": {
+                            "execise": {
                                 backgroundColor: selectedOption === option ? "rgba(0, 186, 52, 0.15)" : "rgba(0, 186, 52, 0.15)",
                                 textColor: selectedOption === option ? "#00BA34" : "#00BA34",
                                 borderColor: selectedOption === option ? "#00BA34" : "transparent",

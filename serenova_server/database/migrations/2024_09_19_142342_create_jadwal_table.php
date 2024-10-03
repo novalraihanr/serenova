@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nama');
             $table->enum('jenis',['work','exercise','daily']);
             $table->foreignId('id_kalender')->constrained(table: 'kalender', column:'id_kalender');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->longText('note');
             $table->timestamps();
         });

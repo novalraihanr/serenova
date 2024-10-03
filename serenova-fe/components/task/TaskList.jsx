@@ -40,7 +40,7 @@ const TaskList = ({ selectedDate, tasks }) => {
     // Function to filter tasks based on the selected date
     const getTasksForSelectedDate = (date) => {
         return tasks.filter(task => {
-            const taskDate = new Date(task.date); // Assuming task.date is a Date object
+            const taskDate = new Date(task.tanggal); // Assuming task.date is a Date object
             return taskDate.toDateString() === date.toDateString();
         });
     };

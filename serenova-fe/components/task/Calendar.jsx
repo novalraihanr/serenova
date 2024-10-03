@@ -25,10 +25,8 @@ const Calendar = ({ setSelectedDate, tasks }) => {
   };
 
   const events = (tasks || []).map(task => ({
-    title: task.type,
-    start: task.date.toISOString(),
-    end: task.endDate ? task.endDate.toISOString() : null,
-    description: task.description,
+    title: task.jenis,
+    description: task.note,
   }));
 
   // Fungsi untuk menampilkan konten acara tanpa waktu

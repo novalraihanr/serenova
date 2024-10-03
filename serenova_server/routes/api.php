@@ -15,6 +15,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/Authuser', [AuthController::class, 'getUser']);
+
     Route::get('/user', [UserController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'show']);
 
@@ -36,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/jadwal/add', [JadwalController::class, 'store']);
     Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
     Route::delete('/jadwal/{id}', [JadwalController::class, 'delete']);
+
+    Route::get('/count', [JadwalController::class, 'countJenis']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

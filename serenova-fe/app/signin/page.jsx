@@ -19,9 +19,24 @@ const SignPage = () => {
         router.push('/dashboard');
     };
 
-    const handleLogin = () => {
-        router.push('/login');
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const data = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        }
+        try {
+            const response = await axios.post('http://localhost:8000/api/register', data);
+            const result = response.data;
+            alert(result.message);
+            if (result.success) {
+                router.push('/login');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div>
@@ -82,11 +97,11 @@ const SignPage = () => {
                                         <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} className="text-gray-600" />
                                     </button>
                                 </div>
-                                
+
                                 {/* BUTTON */}
                                 <button
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
-                                    onClick={handleLogin}
+                                    onClick={handleRegister}
                                 >
                                     Continue
                                 </button>

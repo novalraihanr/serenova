@@ -1,8 +1,40 @@
 "use client";
 
+import axiosFetch from "@lib/axiosFetch";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const DaySoFar = () => {
+
+    const handleCount = async (e) => {
+        try {
+            const response = await axiosFetch.get('/api/count');
+            const result = response.data;
+
+            result.forEach(element => {
+                switch (element.jenis) {
+                    case 'work':
+                        document.getElementById("work").innerHTML = element.percentage + "%";
+                        break;
+                    case 'daily':
+                        document.getElementById("daily").innerHTML = element.percentage + "%";
+                        break;
+                    case 'exercise':
+                        document.getElementById("exercise").innerHTML = element.percentage + "%";
+                        break;
+                    default:
+                        break;
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        handleCount();
+    }, [])
+
     return (
         <div>
             <h1 className="font-bold text-bgButton">Your Day So Far</h1>
@@ -25,7 +57,7 @@ const DaySoFar = () => {
                         <div className="ml-2 py-2">
                             <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Working<br></br>
-                                <span className="text-lg sm:text-xl">10%</span>
+                                <span className="text-lg sm:text-xl" id="work">10%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>
@@ -54,7 +86,7 @@ const DaySoFar = () => {
                         <div className="ml-2 py-2">
                             <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Daily<br></br>
-                                <span className="text-lg sm:text-xl">20%</span>
+                                <span className="text-lg sm:text-xl" id="daily">20%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>
@@ -78,7 +110,7 @@ const DaySoFar = () => {
                         <div className="ml-2 py-2">
                             <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Workout<br></br>
-                                <span className="text-lg sm:text-xl">25%</span>
+                                <span className="text-lg sm:text-xl" id="exercise">25%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>

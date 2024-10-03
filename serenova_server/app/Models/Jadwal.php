@@ -40,5 +40,14 @@ class Jadwal extends Model
         return $this->belongsTo(Kalender::class);
     }
 
+    protected $fillable = [
+        'id_kalender',
+        'nama',
+        'jenis',
+        'start_time',
+        'end_time',
+        'note',
+    ];
+
 
 }

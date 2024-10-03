@@ -1,5 +1,7 @@
 import '@styles/globals.css';
 
+import axiosFetch from '@lib/axiosFetch';
+
 export const metadata = {
   title: "Serenova",
   description: 'Serenova'
@@ -16,5 +18,7 @@ const RootLayout = ({ children }) => {
     </html>
   )
 }
+
+
 
 export default RootLayout;
