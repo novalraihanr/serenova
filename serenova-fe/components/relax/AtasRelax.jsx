@@ -5,7 +5,19 @@ import { useRouter } from 'next/navigation';
 const AtasRelax = () => {
     const router = useRouter();
 
-    
+    const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+    const display = (time) => {
+        document.getElementById('time').innerHTML = time;
+    }
+
+    React.useEffect(() => {
+        const interval = setInterval(async () => {
+            setTime(new Date().toLocaleTimeString('en-GB',{ hour: '2-digit', minute: '2-digit', hour12: false }));
+        }, 1000);
+        display(time);
+        return () => clearInterval(interval);
+    }, [time]);
 
     return (
         <div className="">
@@ -32,6 +44,8 @@ const AtasRelax = () => {
                     style={{
                         textShadow: '4px 4px 0px rgba(0, 0, 0, 0.2)',
                     }}
+
+                    id="time"
                 >
 
                 </p>

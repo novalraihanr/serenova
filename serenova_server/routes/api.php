@@ -43,7 +43,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
     Route::delete('/jadwal/{id}', [JadwalController::class, 'delete']);
 
-    Route::get('/notif', [JadwalController::class, 'checkNotif']);
+    Route::get('/warningNotif', [JadwalController::class, 'warningNotif']);
+    Route::get('/todayTask', [JadwalController::class, 'todayTask']);
+    Route::get('/notif', [JadwalController::class, 'todayEmail']);
 
     Route::get('/count', [JadwalController::class, 'countJenis']);
 

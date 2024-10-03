@@ -1,11 +1,28 @@
 "use client";
 
+import axiosFetch from "@lib/axiosFetch";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import CardSchedule from "./CardSchedule";
 import MiniCalender from "./MiniCalender";
 import NoSchedule from "./NoSchedule";
 
 const ListSchedule = () => {
+
+    const [schedules, setSchedules] = useState([])
+
+    const handleSchedule = async () => {
+        const response = await axiosFetch.get('/api/todayTask');
+        const result = response.data
+
+        setSchedules(result)
+    }
+
+    useEffect(() => {
+        handleSchedule();
+    }, [])
+
     return (
         <div className="grid justify-center">
             <h1 className="font-bold text-bgButton">List Of Schedules</h1>
@@ -26,7 +43,7 @@ const ListSchedule = () => {
                 </div>
                 {/* CARD */}
                 <div>
-                    <NoSchedule />
+                    {schedules.length > 0 ? schedules.map((schedule, index) => <CardSchedule key={index} schedule={schedule} />) : <NoSchedule />}
                 </div>
             </div>
         </div>

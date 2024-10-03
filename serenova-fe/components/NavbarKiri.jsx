@@ -37,23 +37,16 @@ const NavbarKiri = () => {
         }
     }
 
-    const handleReminder = async () => {
-        const response = await axiosFetch.get('/api/notif');
-        const result = response.data;
-
-        console.log(result);
-    }
-
     useEffect(() => {
         if(!token && pathname !== '/forgot'){
             router.push('/login');
         }
 
-        const Reminder = localStorage.getItem('Reminder');
-        if(!Reminder){
-            // handleReminder();
-            // localStorage.setItem('Reminder', true);
-        }
+        // const Reminder = localStorage.getItem('Reminder');
+        // if(!Reminder){
+        //     // handleReminder();
+        //     // localStorage.setItem('Reminder', true);
+        // }
     }, []);
 
 

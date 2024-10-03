@@ -13,7 +13,41 @@ use Illuminate\Support\Facades\Mail;
 
 class JadwalController extends Controller
 {
-    public function checkNotif() {
+
+    public function warningNotif() {
+        $today = Carbon::today()->format('Y-m-d');
+        $jadwals = Jadwal::select(DB::raw('TIMEDIFF(jadwal.end_time, jadwal.start_time) as total'))
+            ->where('jenis', 'work')
+            ->whereDate('jadwal.created_at', $today)
+            ->get();
+
+        $total = 0;
+        foreach ($jadwals as $j) {
+            $total += strtotime($j->total);
+        }
+
+        if ($total > strtotime('09:00:00')) {
+            // return response()->json(['message' => 'Total work time is more than 9 hours', 'data' => $total]);
+            return response()->json(['result' => true]);
+        }else {
+            // return response()->json(['message' => 'Total work time is less than 9 hours', 'data' => $total]);
+            return response()->json(['result' => false]);
+        }
+    }
+
+    public function todayTask(){
+        $today = Carbon::today()->format('Y-d-m');
+
+        $jadwals = Jadwal::select('jadwal.*', 'kalender.tanggal')
+            ->join('kalender', 'jadwal.id_kalender', '=', 'kalender.id_kalender')
+            ->whereDate('kalender.tanggal',$today)
+            ->get();
+
+        return response()->json($jadwals);
+
+    }
+
+    public function todayEmail() {
         $today = Carbon::today()->format('Y-m-d');
         $jadwals = Jadwal::select('jadwal.*', 'kalender.tanggal', 'user_kalender.id_user')->join('kalender', 'jadwal.id_kalender', '=', 'kalender.id_kalender')->join('user_kalender', 'kalender.id_kalender', '=', 'user_kalender.id_kalender')->whereDate('kalender.tanggal', $today)->get();
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-const CardSchedule = () => {
+const CardSchedule = (schedule) => {
     return (
         <div className="flex bg-white py-4 mt-3 rounded-lg">
             <div className="border border-[#00B4BE] px-0.5 mr-2 bg-[#00B4BE] rounded-r-lg">
@@ -19,8 +19,8 @@ const CardSchedule = () => {
                         />
                     </div>
                     <div>
-                        <p className="actHead text-[#2B3030] font-semibold text-xs">Meeting With Partner</p>
-                        <p className="jam text-[#747474] text-xxs"><span className="start">01.00 pm</span>-<span>03.00 pm</span></p>
+                        <p className="actHead text-[#2B3030] font-semibold text-xs">{schedule.schedule.nama}</p>
+                        <p className="jam text-[#747474] text-xxs"><span className="start">{schedule.schedule.start_time.slice(0, -3)}</span>-<span>{schedule.schedule.end_time.slice(0, -3)}</span></p>
                     </div>
                 </div>
 
