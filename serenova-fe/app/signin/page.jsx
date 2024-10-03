@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -15,8 +16,8 @@ const SignPage = () => {
 
     const router = useRouter();
 
-    const handleDashboard = () => {
-        router.push('/dashboard');
+    const handleLogin = () => {
+        router.push('/login');
     };
 
     const handleRegister = async (e) => {

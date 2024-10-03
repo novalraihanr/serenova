@@ -1,5 +1,6 @@
 "use client";
 
+import axios from 'axios';
 import React from 'react'
 import { useRouter } from 'next/navigation';
 
@@ -9,7 +10,24 @@ const page = () => {
     const handleLogin = () => {
         router.push('/login');
     }
-    
+
+    const handleReset = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            email : document.getElementById('email').value
+        }
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/resetEmail', data);
+            const result = response.data;
+
+            alert(result)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div>
             <section className="login w-full h-screen">
@@ -41,11 +59,12 @@ const page = () => {
                                 </div>
                                 {/* BUTTON */}
                                 <button
+                                    onClick={handleReset}
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
                                 >
                                     Reset Password
                                 </button>
-                                
+
                                 <div className="text-center mt-6">
                                     <p className="text-[#969696] font-medium text-sm 2xl:text-base">Suddenly remember your password?
                                         <button onClick={handleLogin} className="text-[#02055A] font-extrabold ml-2 2xl:text-base">

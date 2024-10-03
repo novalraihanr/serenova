@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+
+
+// Route::post('/resetEmail', [AuthController::class, 'send_reset']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/Authuser', [AuthController::class, 'getUser']);
 
@@ -38,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/jadwal/add', [JadwalController::class, 'store']);
     Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
     Route::delete('/jadwal/{id}', [JadwalController::class, 'delete']);
+
+    Route::get('/notif', [JadwalController::class, 'checkNotif']);
 
     Route::get('/count', [JadwalController::class, 'countJenis']);
 

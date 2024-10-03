@@ -2,15 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifJadwal;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use App\Models\Kalender;
 use App\Models\User;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class JadwalController extends Controller
 {
+    public function checkNotif() {
+        $today = Carbon::today()->format('Y-m-d');
+        $jadwals = Jadwal::select('jadwal.*', 'kalender.tanggal', 'user_kalender.id_user')->join('kalender', 'jadwal.id_kalender', '=', 'kalender.id_kalender')->join('user_kalender', 'kalender.id_kalender', '=', 'user_kalender.id_kalender')->whereDate('kalender.tanggal', $today)->get();
+
+        if(is_null($jadwals)){
+            return response()->json(['message' => "Tidak ada jadwal hari ini"]);
+        }
+
+        foreach ($jadwals as $j) {
+            $user = User::find($j->id_user);
+            if(is_null($user)){
+                return response()->json(['message' => "User tidak ditemukan"]);
+            }
+            Mail::to($user->email)->send(new NotifJadwal($j));
+        }
+
+        return response()->json($jadwals);
+    }
 
     public function countJenis()
     {
@@ -35,7 +55,7 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required',
+            'id' => 'required|exists:users,id',
             'nama' => 'required',
             'jenis' => 'required|in:work,exercise,daily',
             'date' => 'required',
@@ -48,10 +68,18 @@ class JadwalController extends Controller
         $startTime = date('H:i:s', strtotime($request->startTime));
         $endTime = date('H:i:s', strtotime($request->endTime));
 
-        $kalender = Kalender::where('tanggal', '=',$date)->first();
+        $kalender = Kalender::where('tanggal', '=', $date)->first();
 
         if($kalender == null) {
             $user = User::find($request->id);
+
+            if ($user == null) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User tidak ditemukan',
+                    'data' => null
+                ]);
+            }
 
             $kalender = new Kalender;
             $kalender->tanggal = $date;

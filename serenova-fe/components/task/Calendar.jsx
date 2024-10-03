@@ -23,14 +23,14 @@ const Calendar = ({ setSelectedDate, tasks }) => {
   const events = (tasks || []).map(task => ({
     title: task.jenis,
     description: task.note,
-    start: task.tanggal,
+    start: new Date( new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(task.tanggal))),
   }));
 
   // Fungsi untuk menampilkan konten acara tanpa waktu
   const renderEventContent = (eventInfo) => {
     return (
-      <div>
-        <strong>{eventInfo.event.title}</strong>
+      <div className="border w-full bg-[#00B4BE] text-white rounded">
+        <strong className="pl-1">{eventInfo.event.title}</strong>
       </div>
     );
   };
@@ -55,4 +55,3 @@ const Calendar = ({ setSelectedDate, tasks }) => {
 };
 
 export default Calendar;
-

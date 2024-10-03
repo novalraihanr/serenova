@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 const AtasRelax = () => {
     const router = useRouter();
 
+    
+
     return (
         <div className="">
             <div className="flex justify-between items-center">
@@ -31,7 +33,7 @@ const AtasRelax = () => {
                         textShadow: '4px 4px 0px rgba(0, 0, 0, 0.2)',
                     }}
                 >
-                    22.30
+
                 </p>
             </div>
         </div>

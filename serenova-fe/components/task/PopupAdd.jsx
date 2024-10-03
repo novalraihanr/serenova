@@ -77,12 +77,14 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
     };
 
     const handleSave = async () => {
+
+        const formattedSelectedDate = selectedDate ? selectedDate.toLocaleDateString('id-ID', { year: 'numeric', month: '2-digit', day: '2-digit' }) : null;
         //KUMPUL DATA
         const taskData = {
             id: cookie.get('user_id'),
             nama: taskInput,
             jenis: selectedOption,
-            date: selectedDate,
+            date: formattedSelectedDate,
             startTime: startTime.format('HH:mm:ss'),
             endTime: endTime.format('HH:mm:ss'),
             note: textareaRef.current.value,
@@ -98,8 +100,8 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
 
 
 
-        addTask(taskData); // BALEK KE PARENT
-        onClose();
+        // addTask(taskData); // BALEK KE PARENT
+        // onClose();
     };
 
     return (
