@@ -13,12 +13,12 @@ const Notification = ({ onClose, hasBeenViewed }) => {
     const handleWarningNotif = async () => {
         try {
             const response = await axiosFetch.get('/api/warningNotif');
-            const result = response.data;
+            const result = response.data.result;
 
             if(result){
                 localStorage.setItem('showWarning', true);
             }else{
-                localStorage.setItem('showWarning', false);
+                localStorage.removeItem('showWarning');
             }
         } catch (error) {
             console.log(error);

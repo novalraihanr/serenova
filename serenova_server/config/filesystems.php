@@ -45,18 +45,41 @@ return [
             'throw' => false,
         ],
 
-        's3' => [
-            'driver' => 's3',
+        'ambient' => [
+            'driver' => 'minio',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'bucket' => 'ambient',
+            'url' => 'http://bucket-minio.fauzanghaza.com/ambient',
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
 
+        'photoProfile' => [
+            'driver' => 'minio',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => 'photoprofile',
+            'url' => 'http://bucket-minio.fauzanghaza.com/photoprofile',
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+        ],
+
+        'music' => [
+            'driver' => 'minio',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => 'music',
+            'url' => 'http://bucket-minio.fauzanghaza.com/music',
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+        ],
     ],
 
     /*
