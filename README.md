@@ -25,6 +25,9 @@ npm
 MySQL (or any other supported database)
 Git
 
+Link Machine Learning
+https://github.com/ghazafm/stress-checker-model.git
+
 Backend (Laravel)
 
 Clone the repository:
