@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -20,13 +20,10 @@ const Calendar = ({ setSelectedDate, tasks }) => {
     setSelectedDateState(arg.dateStr);
   };
 
-  const handleEventClick = (info) => {
-    alert(`Event: ${info.event.title}\nDescription: ${info.event.extendedProps.description}`);
-  };
-
   const events = (tasks || []).map(task => ({
     title: task.jenis,
     description: task.note,
+    start: task.tanggal,
   }));
 
   // Fungsi untuk menampilkan konten acara tanpa waktu
@@ -34,7 +31,6 @@ const Calendar = ({ setSelectedDate, tasks }) => {
     return (
       <div>
         <strong>{eventInfo.event.title}</strong>
-        {/* Hanya menampilkan title, tanpa waktu */}
       </div>
     );
   };
@@ -51,7 +47,6 @@ const Calendar = ({ setSelectedDate, tasks }) => {
         }}
         dateClick={handleDateClick}
         events={events}
-        eventClick={handleEventClick}
         eventTimeFormat={false}
         eventContent={renderEventContent} // Menerapkan fungsi render
       />
@@ -60,3 +55,4 @@ const Calendar = ({ setSelectedDate, tasks }) => {
 };
 
 export default Calendar;
+

@@ -26,7 +26,7 @@ const Page = () => {
     try {
         const response = await axiosFetch.get('/api/jadwal');
         const result = response.data;
-        setTasks(result);
+        setTasks(result.map((task, index) => ({ ...task, index })));
     } catch (error) {
         console.log(error);
         setTasks([]);
@@ -35,12 +35,11 @@ const Page = () => {
 
   useEffect(() => {
     getTask();
-    console.log(tasks);
   }, []);
 
-  const addTask = (taskData) => {
-    setTasks((prevTasks) => [...prevTasks, taskData]);
-  };
+//   const addTask = (taskData) => {
+//     setTasks((prevTasks) => [...prevTasks, taskData]);
+//   };
 
   return (
     <div className="flex h-screen">
@@ -78,7 +77,7 @@ const Page = () => {
       </div>
 
       {/* NEW TASK */}
-      <PopupAdd isOpen={isPopupOpen} onClose={handleClosePopup} addTask={addTask} />
+      <PopupAdd isOpen={isPopupOpen} onClose={handleClosePopup}/>
     </div>
   );
 };

@@ -6,10 +6,17 @@ import { useEffect } from "react";
 
 const DaySoFar = () => {
 
+    //FIXME : FIX THE PERCENTAGE
     const handleCount = async (e) => {
         try {
             const response = await axiosFetch.get('/api/count');
             const result = response.data;
+
+            var intial_value = 100;
+
+            result.includes('work') ? null : document.getElementById("work").innerHTML = "0%";
+            result.includes('exercise') ? null : document.getElementById("exercise").innerHTML = "0%";
+            result.includes('daily') ? null : document.getElementById("daily").innerHTML = "100%";
 
             result.forEach(element => {
                 switch (element.jenis) {

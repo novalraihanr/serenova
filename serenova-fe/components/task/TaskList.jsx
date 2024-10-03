@@ -8,9 +8,9 @@ const TaskList = ({ selectedDate, tasks }) => {
     const [selectedTask, setSelectedTask] = useState(null);
 
     const taskTypeColors = {
-        Working: "#00B4BE",
-        Workout: "#00BA34",
-        Daily: "#EB6A4B"
+        work: "#00B4BE",
+        exercise: "#00BA34",
+        daily: "#EB6A4B"
     };
 
     const formatDate = (date) => {
@@ -74,7 +74,7 @@ const TaskList = ({ selectedDate, tasks }) => {
                 >
                     <div
                         className={`border-2 rounded`}
-                        style={{ borderColor: taskTypeColors[task.type] || "#00B4BE" }}
+                        style={{ borderColor: taskTypeColors[task.jenis] || "#00B4BE" }}
                     >
                     </div>
                     <div className="overflow-hidden rounded-full w-10 h-10 2xl:w-14 2xl:h-14 mx-3">
@@ -86,9 +86,9 @@ const TaskList = ({ selectedDate, tasks }) => {
                         />
                     </div>
                     <div className="text-start">
-                        <p className="font-semibold text-[#2B3030] text-sm" id="task">{task.task}</p>
+                        <p className="font-semibold text-[#2B3030] text-sm" id="task">{task.nama}</p>
                         <p className="font-semibold text-[#747474] text-xs">
-                            <span id="start">{task.startTime?.format("hh:mm a")}</span> - <span id="end">{task.endTime?.format("hh:mm a")}</span>
+                            <span id="start">{task.start_time.slice(0, -3)}</span> - <span id="end">{task.end_time.slice(0, -3)}</span>
                         </p>
                     </div>
                 </div>
