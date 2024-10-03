@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ambientController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KalenderController;
@@ -46,8 +47,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/warningNotif', [JadwalController::class, 'warningNotif']);
     Route::get('/todayTask', [JadwalController::class, 'todayTask']);
     Route::get('/notif', [JadwalController::class, 'todayEmail']);
-
     Route::get('/count', [JadwalController::class, 'countJenis']);
+
+    Route::get('/ambient',[ambientController::class, 'getAmbientMP3']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import Image from "next/image";
 import Wallpaper from "./Wallpaper";
 import Music from "./Music";
 import Ambient from "./Ambient";
 
-const MenuRelax = React.forwardRef(({ onClose, onBackgroundChange, currentBackgroundImage }, ref) => { 
+const MenuRelax = React.forwardRef(({ onClose, onBackgroundChange, currentBackgroundImage }, ref) => {
     const [volume, setVolume] = useState(40);
 
     const handleVolumeChange = (e) => {
@@ -31,9 +31,9 @@ const MenuRelax = React.forwardRef(({ onClose, onBackgroundChange, currentBackgr
                     <Music />
                 </div>
                 <div className="ambient mt-7" id="ambient">
-                    <Ambient />
+                    <Ambient volume={volume}/>
                 </div>
-                
+
                 {/* VOLUME CONTROL */}
                 <div className="flex volume px-3 py-2 mt-7 items-center justify-center bg-white rounded-lg">
                     <Image src="/assets/images/relax/vol_down.svg" width={20} height={20} alt="volume down" />

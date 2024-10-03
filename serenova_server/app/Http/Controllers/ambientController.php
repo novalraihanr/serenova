@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Storage;
 class ambientController extends Controller
 {
 
-    public function getAmbientMP3($filename)
+    public function getAmbientMP3()
     {
-        $file = Storage::disk('ambient')->get($filename);
-        return response($file, 200)->header('Content-Type', 'audio/mpeg');
+        $file = Storage::disk('ambient')->path('Rain Sounds.mp3');
+        return response()->file($file, ['Content-Type' => 'audio/mpeg']);
     }
 }
