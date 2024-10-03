@@ -5,12 +5,32 @@ import IntensityBar from '@components/dashboard/IntensityBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import NavAtas from '@components/NavAtas';
+import StressHistoryBar from '@components/dashboard/StressHistoryBar';
+import { useState, useEffect } from 'react';
+
 const page = () => {
     const router = useRouter();
+    const [hasData, setHasData] = useState(false);
 
     const handleQuestion = () => {
         router.push('/stressQuestion');
-    }
+    };
+
+    useEffect(() => {
+        const checkData = async () => {
+            try {
+                const response = await fetch('/api/historycheck');
+                const data = await response.json();
+                setHasData(data.length > 0); // Set hasData to true if there's data
+            } catch (error) {
+                console.error("Error fetching history data:", error);
+                setHasData(false); // If there's an error, no data is available
+            }
+        };
+
+        checkData();
+    }, []);
+
     return (
         <div className="flex h-screen flex-col md:flex-row">
             {/* NAVBAR ATAS FOR SMALL SCREENS */}
@@ -33,19 +53,30 @@ const page = () => {
                 </h1>
                 {/* KANAN */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 mt-5 bg-white p-7 rounded-lg gap-4">
-                    <div className="grid justify-center px-16 lg:border-r-2">
+                    <div className="grid justify-center px-4 lg:border-r-2">
                         <h1 className="text-bgButton font-semibold text-2xl text-center mb-7">Your Stress Level History</h1>
-                        <IntensityBar />
-                        <p className="text-[#505050] text-xs mt-3 text-justify">
-                            Your stress levels rise throughout the week, peaking on Monday.
-                            Over the weekend, they drop, showing your ability to relax. The
-                            spike on Monday reflects the challenge of returning to routine.
-                            By Tuesday, stress levels ease, suggesting that relaxation techniques
-                            early in the week could help manage stress better.
-                        </p>
+                        {hasData ? (
+                            <StressHistoryBar />
+                        ) : (
+                            <div className="flex flex-col justify-center items-center">
+                                <Image src="/assets/images/dashboard/first.svg" width={200} height={200} alt="No activities yet" />
+                                <p className="font-bold text-bgButton text-center mt-3">
+                                    No Data Available
+                                </p>
+                                <p className="font-medium text-[#505050] text-xs text-center mt-2">Let's check your stress level!</p>
+                            </div>
+                        )}
+                        {hasData && (
+                            <p className="text-[#505050] text-xs mt-3 text-justify px-2 overflow-hidden">
+                                The graph above shows the history of your stress checker.
+                                You can see the history of your stress levels going up and down.
+                                It is hoped that you will understand the situation better and
+                                always get enough rest.
+                            </p>
+                        )}
                     </div>
                     {/* KANAN */}
-                    <div className="grid justify-center px-16 border-t-2 pt-7 lg:border-0 lg:pt-0">
+                    <div className="grid justify-center px-4 border-t-2 pt-7 lg:border-0 lg:pt-0">
                         <h1 className="text-bgButton font-semibold text-2xl text-center">Check Your Stress Level</h1>
                         <div className="grid justify-center p-7">
                             <div className="flex justify-center">
@@ -56,7 +87,7 @@ const page = () => {
                                     className="w-28 h-auto min-w-28"
                                 />
                             </div>
-                            <p className="text-xs mt-3 text-justify">
+                            <p className="text-xs mt-3 text-justify px-2 overflow-hidden">
                                 The Stress Checker feature is designed to help you regularly
                                 monitor your stress levels and provide recommendations to maintain
                                 your mental balance. By answering a few short questions, you will
@@ -64,9 +95,9 @@ const page = () => {
                                 how to manage them effectively.
                             </p>
 
-                            <button 
-                            className="text-white font-bold text-xs bg-[#02055A] py-2 mt-3 rounded-lg"
-                            onClick={handleQuestion}>
+                            <button
+                                className="text-white font-bold text-xs bg-[#02055A] py-2 mt-3 rounded-lg"
+                                onClick={handleQuestion}>
                                 Get Started
                             </button>
                         </div>
@@ -74,7 +105,7 @@ const page = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default page
+export default page;
