@@ -1,10 +1,13 @@
 "use client";
 
+import axios from "axios";
+import cookie from "cookie-cutter";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import axiosFetch from "@lib/axiosFetch";
 
 const NavbarKiri = () => {
     const [activeItem, setActiveItem] = useState("dashboard");
@@ -15,8 +18,19 @@ const NavbarKiri = () => {
         router.push('/relaxation');
     }
 
-    const handleLanding = () => {
-        router.push('/')
+    const handleLogout = async (e) => {
+        try {
+            const response = await axiosFetch.post('/api/logout');
+            const result = response.data;
+            if(result.success){
+                cookie.set('token', '', {expires: new Date(0)});
+                router.push('/login');
+            }else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const menuItems = [
@@ -82,7 +96,7 @@ const NavbarKiri = () => {
             <div className="mt-16">
                 <ul>
                     {menuItems.map((item) => {
-                        const isActive = pathname === item.link; 
+                        const isActive = pathname === item.link;
 
                         return (
                             <li
@@ -111,7 +125,7 @@ const NavbarKiri = () => {
             </div>
             {/* BUTTON RELAX */}
             <div className="flex justify-center items-center mt-10">
-                <button 
+                <button
                 className="bg-bgButton text-white text-md font-bold flex justify-center items-center py-2 px-7 rounded-xl"
                 onClick={handleRelax}>
                     <Image
@@ -126,9 +140,9 @@ const NavbarKiri = () => {
             {/* LOGOUT */}
             <div className="absolute bottom-0">
                 <div className="flex pl-6 items-center">
-                    <button 
+                    <button
                     className="font-medium text-[#C62828] text-md flex items-center"
-                    onClick={handleLanding}>
+                    onClick={handleLogout}>
                         <Image
                             src="/assets/images/navbarKiri/logout.svg"
                             width={30}

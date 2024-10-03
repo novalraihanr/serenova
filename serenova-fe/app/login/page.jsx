@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+import cookie from "cookie-cutter";
 import Image from "next/image";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -19,8 +21,24 @@ const SignPage = () => {
         router.push('/signin');
     }
 
-    const handleDashboard = () => {
-        router.push('/dashboard');
+    const handleFetchLogin = async (e) => {
+        e.preventDefault();
+        const data = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        }
+        try {
+            const response = await axios.post('http://localhost:8000/api/login', data);
+            const result = response.data;
+            if (result.success) {
+                cookie.set('token', result.data.token, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24) });
+                router.push('/dashboard');
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -56,7 +74,7 @@ const SignPage = () => {
                                 <label className="font-semibold text-sm 2xl:text-base">Kata Sandi</label>
                                 <div className="flex border rounded-lg overflow-hidden border-greyBorder mt-1 mb-3 w-full relative">
                                     <input
-                                        type={showPassword ? "text" : "password"} 
+                                        type={showPassword ? "text" : "password"}
                                         name="password"
                                         id="password"
                                         className="text-sm 2xl:text-base px-3 py-2 w-full font-semibold rounded-none bg-white focus:outline-none"
@@ -76,7 +94,7 @@ const SignPage = () => {
                                 {/* BUTTON */}
                                 <button
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
-                                    onClick={handleDashboard}
+                                    onClick={handleFetchLogin}
                                 >
                                     Login
                                 </button>
