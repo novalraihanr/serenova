@@ -28,7 +28,7 @@ const DashStressCheck = () => {
                 </p>
 
                 <button 
-                className="text-white font-bold text-xs bg-[#00B4BE] py-2 mt-3 rounded-lg"
+                className="text-white font-bold text-xs bg-bgButton py-2 mt-3 rounded-lg"
                 onClick={handleCheck}>
                     Check Stress Level
                 </button>

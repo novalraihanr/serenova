@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 const Section01 = () => {
     const router = useRouter();
 
-    const handleSignin = () => {
-        router.push('/signin');
+    const handleLogin = () => {
+        router.push('/login');
     };
 
     return (
@@ -22,10 +22,10 @@ const Section01 = () => {
                 Effortless schedule management and stress detection for individuals.<br></br>
                 Stay productive, reduce stress, and achieve a balanced life with AI-powered insights.
             </p>
-            <div className="w-full flex justify-center items-center mt-11">
+            <div className="w-full flex justify-center items-center mt-11 relative z-10">
                 <button 
                 className="text-white bg-bgButton py-3 px-7 rounded-lg font-bold"
-                onClick={handleSignin}>
+                onClick={handleLogin}>
                     Go to Serenova
                 </button>
             </div>
@@ -39,7 +39,7 @@ const Section01 = () => {
             </div>
 
             <div className="absolute bottom-5 right-0">
-                <div className="relative">
+                <div className="relative z-0">
                     <div className="absolute inset-0 bg-gradient-to-t from-[#FBFBFF] to-transparent"></div>
                     <Image
                         src="/assets/images/landingPage/elips02.svg"

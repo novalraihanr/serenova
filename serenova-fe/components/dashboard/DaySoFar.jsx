@@ -6,8 +6,9 @@ const DaySoFar = () => {
     return (
         <div>
             <h1 className="font-bold text-bgButton">Your Day So Far</h1>
-            <div className="grid grid-cols-3 gap-x-3 mt-3">
-                <div className="rounded-lg flex pl-3 overflow-hidden relative">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-3 mt-3">
+                {/* CARD 1 */}
+                <div className="rounded-lg flex pl-3 overflow-hidden relative mb-4 sm:mb-0">
 
                     <div className="absolute top-0 left-0 w-full h-full">
                         <div className="bg-[#FFFADECC] h-3/4 w-full"></div>
@@ -22,15 +23,16 @@ const DaySoFar = () => {
                             className="pt-2 pb-2"
                         />
                         <div className="ml-2 py-2">
-                            <p className="text-base text-bgButton font-bold">
+                            <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Working<br></br>
-                                10%
+                                <span className="text-lg sm:text-xl">10%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>
                     </div>
                 </div>
-                <div className="rounded-lg flex pl-3 overflow-hidden relative">
+                {/* CARD 2 */}
+                <div className="rounded-lg flex pl-3 overflow-hidden relative mb-4 sm:mb-0">
 
                     <div
                         className="absolute top-0 left-0 w-full h-full"
@@ -50,16 +52,16 @@ const DaySoFar = () => {
                             className="pt-2 pb-2"
                         />
                         <div className="ml-2 py-2">
-                            <p className="text-base text-bgButton font-bold">
+                            <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Daily<br></br>
-                                20%
+                                <span className="text-lg sm:text-xl">20%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>
                     </div>
                 </div>
-
-                <div className="rounded-lg flex pl-3 overflow-hidden relative">
+                {/* CARD 3 */}
+                <div className="rounded-lg flex pl-3 overflow-hidden relative mb-4 sm:mb-0">
 
                     <div className="absolute top-0 left-0 w-full h-full">
                         <div className="bg-[#C6E7EC80] h-3/4 w-full"></div>
@@ -74,9 +76,9 @@ const DaySoFar = () => {
                             className="pt-2 pb-2"
                         />
                         <div className="ml-2 py-2">
-                            <p className="text-base text-bgButton font-bold">
+                            <p className="text-base text-bgButton font-bold sm:text-xl">
                                 Workout<br></br>
-                                25%
+                                <span className="text-lg sm:text-xl">25%</span>
                             </p>
                             <p className="text-[7px] text-bgButton">Completed Activity</p>
                         </div>
@@ -84,7 +86,7 @@ const DaySoFar = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default DaySoFar;

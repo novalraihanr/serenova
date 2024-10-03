@@ -15,7 +15,7 @@ const landingPage = () => {
       </div>
 
       <div className="flex-grow bg-[#FBFBFF] h-full">
-        <Section01 />
+        <Section01 /> 
         <Section02 />
         <Section03 />
         <Section04 />

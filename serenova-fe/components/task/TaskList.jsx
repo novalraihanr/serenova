@@ -1,13 +1,23 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
+import TaskDesc from "./TaskDesc";
 
-const TaskList = ({ selectedDate }) => {
+const TaskList = ({ selectedDate, tasks }) => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+
+    const taskTypeColors = {
+        Working: "#00B4BE",
+        Workout: "#00BA34",
+        Daily: "#EB6A4B"
+    };
+
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString(undefined, options);
     };
 
-    // Function to check if the selected date is today
     const isToday = (date) => {
         const today = new Date();
         return (
@@ -16,6 +26,26 @@ const TaskList = ({ selectedDate }) => {
             date.getFullYear() === today.getFullYear()
         );
     };
+
+    const handleCardClick = (task) => {
+        setSelectedTask(task);
+        setIsPopupOpen(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
+        setSelectedTask(null);
+    };
+
+    // Function to filter tasks based on the selected date
+    const getTasksForSelectedDate = (date) => {
+        return tasks.filter(task => {
+            const taskDate = new Date(task.date); // Assuming task.date is a Date object
+            return taskDate.toDateString() === date.toDateString();
+        });
+    };
+
+    const filteredTasks = getTasksForSelectedDate(selectedDate);
 
     return (
         <div className="m-4 relative overflow-y-auto">
@@ -27,30 +57,44 @@ const TaskList = ({ selectedDate }) => {
                     className="bg-transparent text-[#747474] text-sm font-medium ml-2 focus:outline-none w-full"
                 />
             </div>
+
             <div className="flex my-5">
-                {/* Conditionally render "Today" text */}
                 {isToday(selectedDate) && (
                     <p className="text-bgButton font-bold mr-2">Today</p>
                 )}
                 <p className="text-[#747474] font-bold">{formatDate(selectedDate)}</p>
             </div>
-            {/* TASK CARD */}
-            <div>
-                <div className="flex border-t border-b py-3">
-                    <div className="border-2 rounded border-[#00B4BE]"></div>
+
+            {/* TASK CARDS */}
+            {filteredTasks.map((task, index) => (
+                <div
+                    key={index}
+                    className="flex border-t border-b py-3 cursor-pointer"
+                    onClick={() => handleCardClick(task)}
+                >
+                    <div
+                        className={`border-2 rounded`}
+                        style={{ borderColor: taskTypeColors[task.type] || "#00B4BE" }}
+                    >
+                    </div>
                     <div className="overflow-hidden rounded-full w-10 h-10 2xl:w-14 2xl:h-14 mx-3">
                         <Image
                             src="/assets/images/landingPage/haikal.jpg"
                             width={80}
                             height={80}
-                            className="object-cover w-full h-full" />
+                            className="object-cover w-full h-full"
+                        />
                     </div>
                     <div className="text-start">
-                        <p className="font-semibold text-[#2B3030] text-sm">Ngantemi Ketua</p>
-                        <p className="font-semibold text-[#747474] text-xs">01.00 pm - 03.00 pm</p>
+                        <p className="font-semibold text-[#2B3030] text-sm" id="task">{task.task}</p>
+                        <p className="font-semibold text-[#747474] text-xs">
+                            <span id="start">{task.startTime?.format("hh:mm a")}</span> - <span id="end">{task.endTime?.format("hh:mm a")}</span>
+                        </p>
                     </div>
                 </div>
-            </div>
+            ))}
+
+            <TaskDesc isOpen={isPopupOpen} onClose={handleClosePopup} selectedTask={selectedTask} />
         </div>
     );
 }

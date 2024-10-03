@@ -1,7 +1,5 @@
 "use client";
 
-import axios from "axios";
-import cookie from "cookie-cutter";
 import Image from "next/image";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -10,35 +8,22 @@ import { useRouter } from "next/navigation";
 
 const SignPage = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const router = useRouter();
-
     const handleSignin = () => {
         router.push('/signin');
     }
 
-    const handleFetchLogin = async (e) => {
-        e.preventDefault();
-        const data = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        }
-        try {
-            const response = await axios.post('http://localhost:8000/api/login', data);
-            const result = response.data;
-            if (result.success) {
-                cookie.set('token', result.data.token, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24) });
-                router.push('/dashboard');
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    const handleDashboard = () => {
+        router.push('/dashboard');
+    }
+
+    const handleForgot = () => {
+        router.push('/forgot');
     }
 
     return (
@@ -66,7 +51,7 @@ const SignPage = () => {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        className="text-sm 2xl:text-base  px-3 py-2 w-full font-semibold rounded-none bg-white focus:outline-none"
+                                        className="text-sm 2xl:text-base px-3 py-2 w-full font-semibold rounded-none bg-white focus:outline-none"
                                         placeholder="example@gmail.com"
                                     />
                                 </div>
@@ -89,12 +74,18 @@ const SignPage = () => {
                                     </button>
                                 </div>
                                 <div className="flex justify-end text-sm text-[#969696] font-semibold">
-                                    <p className="text-xxs 2xl:text-sm"><a href="#">Forgot Password?</a></p>
+                                    <button
+                                        className="text-xxs 2xl:text-sm bg-transparent border-none cursor-pointer"
+                                        onClick={handleForgot}
+                                    >
+                                        Forgot Password?
+                                    </button>
                                 </div>
-                                {/* BUTTON */}
+
+                                {/* BUTTON LOGIN */}
                                 <button
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
-                                    onClick={handleFetchLogin}
+                                    onClick={handleDashboard}
                                 >
                                     Login
                                 </button>
@@ -117,7 +108,9 @@ const SignPage = () => {
                                 </div>
                                 <div className="text-center mt-6">
                                     <p className="text-[#969696] font-medium text-sm 2xl:text-base">Don't have an account?
-                                        <span className="text-[#02055A] font-extrabold ml-2 2xl:text-base"><a href="" onClick={handleSignin}>Sign Up</a></span>
+                                        <button onClick={handleSignin} className="text-[#02055A] font-extrabold ml-2 2xl:text-base">
+                                            Sign Up
+                                        </button>
                                     </p>
                                 </div>
                             </div>

@@ -7,13 +7,17 @@ import "react-day-picker/dist/style.css";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import DatePicker from "react-multi-date-picker";
 
-const PopupAdd = ({ isOpen, onClose }) => {
+const PopupAdd = ({ isOpen, onClose, addTask }) => {
     if (!isOpen) return null;
 
     const textareaRef = useRef(null);
     const [showCalendar, setShowCalendar] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [tempDate, setTempDate] = useState(null);
+    const [selectedOption, setSelectedOption] = useState("");
+    const [taskInput, setTaskInput] = useState("");
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
 
     const handleInput = () => {
         textareaRef.current.style.height = "auto";
@@ -36,12 +40,8 @@ const PopupAdd = ({ isOpen, onClose }) => {
     };
 
     const cancelDate = () => {
-        if (!tempDate) {
-            setShowCalendar(false);
-        } else {
-            setTempDate(null);
-            setShowCalendar(false);
-        }
+        setTempDate(null);
+        setShowCalendar(false);
     };
 
     useEffect(() => {
@@ -59,9 +59,6 @@ const PopupAdd = ({ isOpen, onClose }) => {
         };
     }, []);
 
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
-
     const handleStartChange = (newTime) => {
         setStartTime(newTime);
 
@@ -71,10 +68,24 @@ const PopupAdd = ({ isOpen, onClose }) => {
     };
 
     const handleEndChange = (newTime) => {
-        // Only allow endTime to be greater than startTime
         if (startTime && newTime && newTime > startTime) {
             setEndTime(newTime);
         }
+    };
+
+    const handleSave = () => {
+        //KUMPUL DATA
+        const taskData = {
+            task: taskInput,
+            type: selectedOption,
+            date: selectedDate,
+            startTime: startTime,
+            endTime: endTime,
+            description: textareaRef.current.value,
+        };
+
+        addTask(taskData); // BALEK KE PARENT
+        onClose();
     };
 
     return (
@@ -93,17 +104,55 @@ const PopupAdd = ({ isOpen, onClose }) => {
                     type="text"
                     placeholder="Add Task"
                     className="border-b border-[#00B4BE] text-[#2B3030] text-xl p-2 w-4/6 font-bold focus:outline-none mb-2"
+                    value={taskInput}
+                    onChange={(e) => setTaskInput(e.target.value)}
                 />
                 <div className="grid grid-cols-12 gap-x-1">
-                    <div className="col-span-2 rounded bg-[#00B4BE1A] px-2 py-1">
-                        <p className="text-sm text-[#00B4BE] font-bold text-center">Working</p>
-                    </div>
-                    <div className="col-span-2 rounded bg-[#EB6A4B1A] px-2 py-1">
-                        <p className="text-sm text-[#EB6A4B] font-bold text-center">Daily</p>
-                    </div>
-                    <div className="col-span-2 rounded bg-[#00BA341A] px-2 py-1">
-                        <p className="text-sm text-[#00BA34] font-bold text-center">Workout</p>
-                    </div>
+                    {["Working", "Daily", "Workout"].map((option) => {
+                        const styles = {
+                            "Working": {
+                                backgroundColor: selectedOption === option ? "rgba(0, 180, 190, 0.15)" : "rgba(0, 180, 190, 0.15)",
+                                textColor: selectedOption === option ? "#00B4BE" : "#00B4BE",
+                                borderColor: selectedOption === option ? "#00B4BE" : "transparent",
+                                borderWidth: selectedOption === option ? "1px" : "1px"
+                            },
+                            "Daily": {
+                                backgroundColor: selectedOption === option ? "rgba(235, 106, 75, 0.15)" : "rgba(235, 106, 75, 0.15)",
+                                textColor: selectedOption === option ? "#EB6A4B" : "#EB6A4B",
+                                borderColor: selectedOption === option ? "#EB6A4B" : "transparent",
+                                borderWidth: selectedOption === option ? "1px" : "1px"
+                            },
+                            "Workout": {
+                                backgroundColor: selectedOption === option ? "rgba(0, 186, 52, 0.15)" : "rgba(0, 186, 52, 0.15)",
+                                textColor: selectedOption === option ? "#00BA34" : "#00BA34",
+                                borderColor: selectedOption === option ? "#00BA34" : "transparent",
+                                borderWidth: selectedOption === option ? "1px" : "1px"
+                            }
+                        };
+
+                        return (
+                            <label
+                                key={option}
+                                className={`col-span-2 rounded px-2 py-1 cursor-pointer text-center border`}
+                                style={{
+                                    backgroundColor: styles[option].backgroundColor,
+                                    borderColor: styles[option].borderColor,
+                                    borderWidth: styles[option].borderWidth
+                                }}
+                            >
+                                <input
+                                    type="radio"
+                                    name="taskType"
+                                    value={option}
+                                    className="hidden"
+                                    onChange={() => setSelectedOption(option)}
+                                />
+                                <p className={`text-sm font-bold`} style={{ color: styles[option].textColor }}>
+                                    {option}
+                                </p>
+                            </label>
+                        );
+                    })}
                 </div>
                 {/* DATE */}
                 <div
@@ -183,25 +232,24 @@ const PopupAdd = ({ isOpen, onClose }) => {
                             disableDayPicker
                             format="hh:mm a"
                             placeholder="End"
-                            plugins={[
-                                <TimePicker hideSeconds maxTime="11.59" /> // Set maximum time to 11:59 PM
-                            ]}
+                            plugins={[<TimePicker hideSeconds />]}
                         />
                     </div>
                 </div>
-                {/* DESC */}
-                <div className="pb-2 pt-3">
-                    <p className="mb-1 font-semibold">Description</p>
-                    <textarea
-                        ref={textareaRef}
-                        className="border w-full rounded-lg focus:outline-none p-3 resize-none"
-                        onInput={handleInput}
-                        placeholder="Type your description here..."
-                        style={{ minHeight: "50px" }}
-                    />
-                </div>
-                <div className="flex justify-end p-2">
-                    <button className="bg-[#00B4BE] text-white font-bold py-2 px-7 rounded-lg text-sm">
+                {/* DESCRIPTION */}
+                <textarea
+                    ref={textareaRef}
+                    onInput={handleInput}
+                    placeholder="Description"
+                    className="border rounded-lg p-2 mt-5 w-full"
+                    rows={1}
+                />
+                {/* SAVE BUTTON */}
+                <div className="flex justify-end mt-4 mb-3">
+                    <button
+                        className="bg-[#00B4BE] text-white py-2 px-6 rounded text-sm font-bold"
+                        onClick={handleSave}
+                    >
                         Save
                     </button>
                 </div>

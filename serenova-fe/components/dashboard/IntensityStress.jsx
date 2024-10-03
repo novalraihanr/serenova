@@ -3,8 +3,9 @@
 import DashStressCheck from "./DashStressCheck";
 import IntensityBar from "./IntensityBar";
 import Image from "next/image";
+import TestResult from "./TestResult";
 
-const IntensityStress = () => {
+const IntensityStress = () => { 
     return (
         <div className="flex mt-5 gap-x-3 ">
             {/* KIRI */}
@@ -28,7 +29,7 @@ const IntensityStress = () => {
                     <h1 className="text-bgButton font-semibold">Stress Checker</h1> 
                 </div>
                 <div className="mt-4 bg-white rounded-lg flex-1"> 
-                    <DashStressCheck />
+                    <TestResult />
                 </div>
             </div>
         </div>

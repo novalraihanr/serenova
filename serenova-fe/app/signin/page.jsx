@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -16,23 +15,8 @@ const SignPage = () => {
 
     const router = useRouter();
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        const data = {
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        }
-        try {
-            const response = await axios.post('http://localhost:8000/api/register', data);
-            const result = response.data;
-            alert(result.message);
-            if (result.success) {
-                router.push('/login');
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    const handleDashboard = () => {
+        router.push('/dashboard');
     };
 
     const handleLogin = () => {
@@ -98,15 +82,13 @@ const SignPage = () => {
                                         <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} className="text-gray-600" />
                                     </button>
                                 </div>
-                                <div className="flex justify-end text-sm text-[#969696] font-semibold">
-                                    <p className="text-xxs 2xl:text-sm"><a href="#">Forgot Password?</a></p>
-                                </div>
+                                
                                 {/* BUTTON */}
                                 <button
                                     className="text-sm 2xl:text-base text-center border w-full py-3 rounded-lg bg-bgButton text-white font-bold mt-6"
-                                    onClick={handleRegister}
+                                    onClick={handleLogin}
                                 >
-                                    Login
+                                    Continue
                                 </button>
                                 {/* DIVIDER */}
                                 <div className="flex flex-row justify-center items-center col-span-12 py-3">
@@ -127,7 +109,12 @@ const SignPage = () => {
                                 </div>
                                 <div className="text-center mt-6">
                                     <p className="text-[#969696] font-medium text-sm 2xl:text-base">Already have an account?
-                                        <span className="text-[#02055A] font-extrabold ml-2"><a href="" onClick={handleLogin}>Log In</a></span>
+                                        <span className="text-[#02055A] font-extrabold ml-2">
+                                            <button onClick={handleLogin} className="focus:outline-none">
+                                                Log In
+                                            </button>
+                                        </span>
+
                                     </p>
                                 </div>
                             </div>
