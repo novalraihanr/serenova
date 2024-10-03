@@ -4,6 +4,7 @@ import NavbarKiri from '@components/NavbarKiri';
 import IntensityBar from '@components/dashboard/IntensityBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import NavAtas from '@components/NavAtas';
 const page = () => {
     const router = useRouter();
 
@@ -11,9 +12,14 @@ const page = () => {
         router.push('/stressQuestion');
     }
     return (
-        <div className="flex h-screen">
-            {/* NAV KIRI */}
-            <div className="w-64 h-full sticky top-0 py-7">
+        <div className="flex h-screen flex-col md:flex-row">
+            {/* NAVBAR ATAS FOR SMALL SCREENS */}
+            <div className="block md:hidden">
+                <NavAtas />
+            </div>
+
+            {/* NAVBAR KIRI FOR MEDIUM AND ABOVE */}
+            <div className="hidden md:block md:w-64 h-full py-7">
                 <NavbarKiri />
             </div>
             {/* MAIN */}
@@ -25,8 +31,9 @@ const page = () => {
                 <h1 className="text-bgButton font-semibold text-2xl mt-3">
                     Stress Checker
                 </h1>
-                <div className="grid grid-cols-2 mt-5 bg-white p-7 rounded-lg">
-                    <div className="grid justify-center px-16 border-r">
+                {/* KANAN */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-5 bg-white p-7 rounded-lg gap-4">
+                    <div className="grid justify-center px-16 lg:border-r-2">
                         <h1 className="text-bgButton font-semibold text-2xl text-center mb-7">Your Stress Level History</h1>
                         <IntensityBar />
                         <p className="text-[#505050] text-xs mt-3 text-justify">
@@ -37,7 +44,8 @@ const page = () => {
                             early in the week could help manage stress better.
                         </p>
                     </div>
-                    <div className="grid justify-center px-16 border-l">
+                    {/* KANAN */}
+                    <div className="grid justify-center px-16 border-t-2 pt-7 lg:border-0 lg:pt-0">
                         <h1 className="text-bgButton font-semibold text-2xl text-center">Check Your Stress Level</h1>
                         <div className="grid justify-center p-7">
                             <div className="flex justify-center">
