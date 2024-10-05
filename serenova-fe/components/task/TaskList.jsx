@@ -44,19 +44,16 @@ const TaskList = ({ selectedDate, tasks }) => {
             return taskDate.toDateString() === date.toDateString();
         });
     };
+
+    const taskTypeImages = {
+        work: "/assets/images/dashboard/work.svg",
+        exercise: "/assets/images/dashboard/workout.svg",
+        daily: "/assets/images/dashboard/daily.svg",
+    };
     const filteredTasks = getTasksForSelectedDate(selectedDate);
 
     return (
-        <div className="m-4 relative overflow-y-auto">
-            <div className="bg-[#A8A8A81A] flex px-3 py-2 rounded-lg">
-                <Image src="/assets/images/task/search.svg" width={20} height={20} />
-                <input
-                    type="text"
-                    placeholder="Search Task"
-                    className="bg-transparent text-[#747474] text-sm font-medium ml-2 focus:outline-none w-full"
-                />
-            </div>
-
+        <div className="m-4 relative overflow-y-auto min-h-96">
             <div className="flex my-5">
                 {isToday(selectedDate) && (
                     <p className="text-bgButton font-bold mr-2">Today</p>
@@ -76,12 +73,14 @@ const TaskList = ({ selectedDate, tasks }) => {
                         style={{ borderColor: taskTypeColors[task.jenis] || "#00B4BE" }}
                     >
                     </div>
+                    {/* Ganti gambar berdasarkan tipe task */}
                     <div className="overflow-hidden rounded-full w-10 h-10 2xl:w-14 2xl:h-14 mx-3">
                         <Image
-                            src="/assets/images/landingPage/haikal.jpg"
+                            src={taskTypeImages[task.jenis] || "/assets/images/tasks/daily.svg"} // Gambar default jika tipe tidak ditemukan
                             width={80}
                             height={80}
                             className="object-cover w-full h-full"
+                            alt={`${task.type} task image`}
                         />
                     </div>
                     <div className="text-start">

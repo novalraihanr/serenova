@@ -1,12 +1,15 @@
 "use client";
 
+import axios from "axios";
 import { useState, useEffect } from "react";
-import NavbarKiri from "@components/NavbarKiri";
+// import NavbarKiri from "@components/NavbarKiri";
 import Likert5 from "@components/stressQuestion/Likert5";
 import LikertTF from "@components/stressQuestion/LikertTF";
+import NavAtas from "@components/NavAtas";
+import dynamic from "next/dynamic";
 
 const fetchQuestions = async () => {
-    const response = await fetch('/api/pertanyaan'); 
+    const response = await fetch('/api/pertanyaan');
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
@@ -14,11 +17,16 @@ const fetchQuestions = async () => {
     return data;
 };
 
+const NavbarKiri = dynamic(() => import('@components/NavbarKiri'), {
+    ssr: false,
+});
+
 const Page = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
     const [questions, setQuestions] = useState([]);
-    
+    const [userAnswers, setUserAnswers] = useState([]);
+
     useEffect(() => {
         const loadQuestions = async () => {
             try {
@@ -32,11 +40,37 @@ const Page = () => {
         loadQuestions();
     }, []);
 
+    // Log the answers whenever they change
+    useEffect(() => {
+        console.log("User answers updated:", userAnswers);
+    }, [userAnswers]);
+
     const handleContinue = () => {
-        if (currentQuestion < questions.length - 1) { 
+        if (!selectedOption) return;
+
+        const currentQ = questions[currentQuestion];
+        let answerValue;
+
+        if (currentQ.type === 'truefalse') {
+            answerValue = currentQ.value[selectedOption]; // True/False
+        } else if (currentQ.type === 'likert5') {
+            answerValue = selectedOption; // Likert scale
+        }
+
+        // Update array
+        const updatedAnswers = [...userAnswers];
+        updatedAnswers[currentQuestion] = answerValue;
+        setUserAnswers(updatedAnswers);
+
+        // Log after updating
+        console.log("Answer for question", currentQuestion + 1, ":", answerValue);
+        console.log("Updated answers array:", updatedAnswers);
+
+        if (currentQuestion < questions.length - 1) {
             setCurrentQuestion(prev => prev + 1);
-            setSelectedOption(null);
+            setSelectedOption(null); // Reset selected option
         } else {
+            const response = axios.post('/api/kuesioner', { answers: updatedAnswers });
             alert("Questionnaire finished!");
         }
     };
@@ -44,9 +78,14 @@ const Page = () => {
     const currentQ = questions[currentQuestion];
 
     return (
-        <div className="flex h-screen">
-            {/* NAV KIRI */}
-            <div className="hidden sm:block sm:w-64 h-full sticky top-0 py-7">
+        <div className="flex h-screen flex-col md:flex-row">
+            {/* NAVBAR ATAS FOR SMALL SCREENS */}
+            <div className="block md:hidden">
+                <NavAtas />
+            </div>
+
+            {/* NAVBAR KIRI FOR MEDIUM AND ABOVE */}
+            <div className="hidden md:block md:w-64 h-full py-7">
                 <NavbarKiri />
             </div>
             {/* MAIN */}
@@ -69,15 +108,14 @@ const Page = () => {
                             {Array.from({ length: questions.length }).map((_, index) => (
                                 <div
                                     key={index}
-                                    className={`py-0.5 flex-1 rounded-lg min-w-[4px] sm:min-w-[8px] lg:min-w-[12px] ${
-                                        index < currentQuestion ? 'bg-[#00B4BE]' : 'bg-[#D9D9D9]'
-                                    }`}>
-                                    {/* BIARKAN KOSONG */}
+                                    className={`py-0.5 flex-1 rounded-lg min-w-[4px] sm:min-w-[8px] lg:min-w-[12px] ${index < currentQuestion ? 'bg-[#00B4BE]' : 'bg-[#D9D9D9]'
+                                        }`}>
+                                    {/* EMPTY */}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    {/* PERTANYAAN */}
+                    {/* QUESTION */}
                     <div className="mt-10">
                         <p className="text-[#747474] text-lg">
                             Question <span className="text-indicator">{currentQuestion + 1}</span>
@@ -85,7 +123,7 @@ const Page = () => {
                         <p className="question text-2xl font-medium">
                             {currentQ ? currentQ.question : "Loading..."}
                         </p>
-                        {/* JAWABAN */}
+                        {/* ANSWERS */}
                         {currentQ && currentQ.type === "truefalse" && (
                             <LikertTF selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
                         )}
@@ -93,9 +131,9 @@ const Page = () => {
                             <Likert5 selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
                         )}
                     </div>
-                    {/* TOMBOL PREV NEXT */}
+                    {/* BUTTONS */}
                     <div className="flex justify-between mt-16">
-                        {/* Tombol Previous */}
+                        {/* Previous Button */}
                         <button
                             className={`shadow-lg rounded-lg px-4 py-2 text-[#2B3030] text-sm font-bold ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                             onClick={() => {
@@ -104,8 +142,8 @@ const Page = () => {
                             disabled={currentQuestion === 0}>
                             Previous
                         </button>
-                        
-                        {/* Tombol Continue / Finish */}
+
+                        {/* Continue/Finish Button */}
                         <button
                             className={`bg-bgButton text-sm font-bold text-white rounded-lg px-4 py-2 ${!selectedOption ? 'opacity-50 cursor-not-allowed' : ''}`}
                             onClick={handleContinue}

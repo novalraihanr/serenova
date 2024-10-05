@@ -8,8 +8,7 @@ const HeadDashboard = ({ toggleNotification, notificationCount, resetNotificatio
     <div className="flex justify-between items-center">
       <div>
         <h1 className="text-2xl font-semibold text-bgButton">
-          <span className="time">Good Evening, </span>
-          <span className="name"> Haikal</span>
+          <span className="time">Welcome to Serenova</span>
         </h1>
       </div>
       <div className="flex items-center flex-row gap-x-3">
@@ -35,7 +34,7 @@ const HeadDashboard = ({ toggleNotification, notificationCount, resetNotificatio
         </div>
         <div className="bg-white overflow-hidden rounded-full w-9 h-9 profile" onClick={onProfileClick}>
           <Image
-            src="/assets/images/landingPage/haikal.jpg"
+            src="/assets/images/landingPage/default.jpg"
             width={80}
             height={80}
             className="object-cover w-full h-full cursor-pointer"

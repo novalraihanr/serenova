@@ -44,7 +44,7 @@ const DaySoFar = () => {
 
     return (
         <div>
-            <h1 className="font-bold text-bgButton">Your Day So Far</h1>
+            <h1 className="font-bold text-bgButton">Your Focus Today</h1>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-3 mt-3">
                 {/* CARD 1 */}
                 <div className="rounded-lg flex pl-3 overflow-hidden relative mb-4 sm:mb-0">
@@ -66,7 +66,7 @@ const DaySoFar = () => {
                                 Working<br></br>
                                 <span className="text-lg sm:text-xl" id="work">10%</span>
                             </p>
-                            <p className="text-[7px] text-bgButton">Completed Activity</p>
+                            <p className="text-[7px] text-bgButton">of Today's Focus</p>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ const DaySoFar = () => {
                                 Daily<br></br>
                                 <span className="text-lg sm:text-xl" id="daily">20%</span>
                             </p>
-                            <p className="text-[7px] text-bgButton">Completed Activity</p>
+                            <p className="text-[7px] text-bgButton">of Today's Focus</p>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@ const DaySoFar = () => {
                                 Workout<br></br>
                                 <span className="text-lg sm:text-xl" id="exercise">25%</span>
                             </p>
-                            <p className="text-[7px] text-bgButton">Completed Activity</p>
+                            <p className="text-[7px] text-bgButton">of Today's Focus</p>
                         </div>
                     </div>
                 </div>

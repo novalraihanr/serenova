@@ -7,6 +7,7 @@ import Image from "next/image";
 import CardSchedule from "./CardSchedule";
 import MiniCalender from "./MiniCalender";
 import NoSchedule from "./NoSchedule";
+import { useRouter } from "next/navigation";
 
 const ListSchedule = () => {
 
@@ -23,6 +24,12 @@ const ListSchedule = () => {
         handleSchedule();
     }, [])
 
+    const router = useRouter();
+
+    const handleTask = () => {
+        router.push('/task');
+    }
+
     return (
         <div className="grid justify-center">
             <h1 className="font-bold text-bgButton">List Of Schedules</h1>
@@ -33,7 +40,9 @@ const ListSchedule = () => {
             {/* ALL SCHEDULE */}
             <div className="mt-2">
                 <div className="flex justify-end items-center">
-                    <p className="text-[2B3030] text-xs">Today's Schedule</p>
+                    <button className="text-[2B3030] text-xs my-2" onClick={handleTask}>
+                        Today's Schedule
+                    </button>
                     <Image
                         src="/assets/images/dashboard/arrow.svg"
                         width={20}

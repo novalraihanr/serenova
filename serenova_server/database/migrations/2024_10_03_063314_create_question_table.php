@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_question');
             $table->foreignId('id_user')->constrained('users', 'id');
             $table->integer('anxiety_level');
-            $table->integer('self-esteem');
+            $table->integer('self_esteem');
             $table->integer('mental_health_history');
             $table->integer('depression');
             $table->integer('blood_pressure');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('basic_needs');
             $table->integer('academic_performance');
             $table->integer('study_load');
-            $table->integer('teacher_student_realationship');
+            $table->integer('teacher_student_relationship');
             $table->integer('future_career_concerns');
             $table->integer('social_support');
             $table->integer('peer_pressure');

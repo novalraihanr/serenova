@@ -1,26 +1,52 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const Section02 = () => {
+    const sectionRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handleScroll = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setIsVisible(true); // Set isVisible to true when the element is in the viewport
+            } else {
+                setIsVisible(false); // Set isVisible to false when the element is out of the viewport
+            }
+        });
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(handleScroll);
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <div className="mt-5 mb-32">
-            <div className="text-center">
-                <h1 className="text-bgButton font-semibold text-4xl">
+        <div className="mt-5 mb-32" id="features" ref={sectionRef}>
+            <div className={`text-center transform ${isVisible ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-700 ease-in-out`}>
+                <h1 className="text-bgButton font-semibold text-3xl px-7 sm:text-4xl sm:px-0">
                     Designed to Help You<br />
                     Achieve More Balance
                 </h1>
-                <p className="text-md text-[#606060] mt-5">
+                <p className="text-sm sm:text-md text-[#606060] mt-5 px-7 sm:px-0">
                     We are here to revolutionize how you manage your schedule<br />
                     and well-being, ensuring a balanced life without stress.
                 </p>
             </div>
 
             {/* CARD SECTION */}
-            <div className="grid grid-cols-3 gap-5 text-center max-w-[900px] mx-auto my-11 px-11">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center max-w-[900px] mx-auto my-11 px-11">
                 {/* CARD 1 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}
@@ -40,7 +66,7 @@ const Section02 = () => {
                 </div>
                 {/* CARD 2 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}
@@ -60,7 +86,7 @@ const Section02 = () => {
                 </div>
                 {/* CARD 3 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}
@@ -80,7 +106,7 @@ const Section02 = () => {
                 </div>
                 {/* CARD 4 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}
@@ -100,7 +126,7 @@ const Section02 = () => {
                 </div>
                 {/* CARD 5 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}
@@ -120,7 +146,7 @@ const Section02 = () => {
                 </div>
                 {/* CARD 6 */}
                 <div
-                    className="border rounded-xl grid place-items-center py-5"
+                    className={`border rounded-xl grid place-items-center py-5 transition-transform duration-700 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'}`}
                     style={{
                         background: "linear-gradient(to bottom, rgba(0, 180, 190, 0.15) 0%, rgba(37, 61, 161, 0.15) 100%)"
                     }}

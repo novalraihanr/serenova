@@ -21,11 +21,11 @@ const TestResult = () => {
     
                 setStressLevel(score);
     
-                if (score <= 50) {
+                if (score <= 33) {
                     setStressText("low");
                     setStressImage("/assets/images/dashboard/low.svg");
                     setStressColor("#50C878"); 
-                } else if (score <= 75) {
+                } else if (score <= 66) {
                     setStressText("medium");
                     setStressImage("/assets/images/dashboard/medium.svg");
                     setStressColor("#FFC107"); 

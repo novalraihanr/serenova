@@ -124,7 +124,7 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
                     onChange={(e) => setTaskInput(e.target.value)}
                 />
                 <div className="grid grid-cols-12 gap-x-1">
-                    {["work", "daily", "execise"].map((option) => {
+                    {["work", "daily", "exercise"].map((option) => {
                         const styles = {
                             "work": {
                                 backgroundColor: selectedOption === option ? "rgba(0, 180, 190, 0.15)" : "rgba(0, 180, 190, 0.15)",
@@ -138,7 +138,7 @@ const PopupAdd = ({ isOpen, onClose, addTask }) => {
                                 borderColor: selectedOption === option ? "#EB6A4B" : "transparent",
                                 borderWidth: selectedOption === option ? "1px" : "1px"
                             },
-                            "execise": {
+                            "exercise": {
                                 backgroundColor: selectedOption === option ? "rgba(0, 186, 52, 0.15)" : "rgba(0, 186, 52, 0.15)",
                                 textColor: selectedOption === option ? "#00BA34" : "#00BA34",
                                 borderColor: selectedOption === option ? "#00BA34" : "transparent",

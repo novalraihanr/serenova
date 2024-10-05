@@ -1,12 +1,17 @@
 "use client";
 
-import NavbarKiri from '@components/NavbarKiri';
+// import NavbarKiri from '@components/NavbarKiri';
 import IntensityBar from '@components/dashboard/IntensityBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import NavAtas from '@components/NavAtas';
 import StressHistoryBar from '@components/dashboard/StressHistoryBar';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+const NavbarKiri = dynamic(() => import('@components/NavbarKiri'), {
+    ssr: false,
+});
 
 const page = () => {
     const router = useRouter();

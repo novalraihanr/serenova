@@ -136,6 +136,9 @@ main {
   outline: none !important;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
 /* SCROLLBAR HIDE RELAS MENU */
 
@@ -155,9 +158,11 @@ input[type="range"]::-webkit-slider-thumb {
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  background: #02055A; /* Custom thumb color */
+  background: #02055A; 
   cursor: pointer;
 }
+
+/* ANIMATION LANDING PAGE */
 
 .animate-fade-in {
   animation: fade-in 2s forwards;
@@ -185,4 +190,57 @@ input[type="range"]::-webkit-slider-thumb {
   }
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fade-in-and-float {
+  animation: fadeIn 1s ease-in-out forwards, floating 6s ease-in-out 1s infinite; 
+}
+
+/* styles/globals.css or your existing CSS file */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%); /* Start off-screen to the right */
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0); /* End at original position */
+        opacity: 1;
+    }
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight 0.5s ease-out forwards; /* Adjust duration and easing as needed */
+}
+
+/* Add to your CSS file if not using Tailwind */
+.transition-transform {
+  transition: transform 0.7s ease-in-out;
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+.translate-x-0 {
+  transform: translateX(0);
+}
 

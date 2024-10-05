@@ -34,6 +34,13 @@ const TaskDesc = ({ isOpen, onClose, selectedTask }) => {
                     </div>
                     <p className="font-semibold mt-3">Description</p>
                     <p className="text-[#747474] text-xs break-words overflow-wrap break-all">{note}</p> {/* Description */}
+                    {/* REMOVE */}
+                    <div className="justify-end flex">
+                        <button className="bg-[#F8ECF1] text-[#CD000A] font-bold flex rounded py-1 px-3 text-sm items-center mt-2">
+                            {/* INI TOMBOL HAPUS */}
+                            <p className="">Remove</p> 
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

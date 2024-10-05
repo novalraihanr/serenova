@@ -9,20 +9,20 @@ import Section04 from "@components/landingPage/Section04";
 
 const landingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
-      <div className="sticky top-0">
+    <div className="min-h-screen flex flex-col relative border">
+      <div className="sticky top-0 z-50"> 
         <NavbarAtas />
       </div>
 
-      <div className="flex-grow bg-[#FBFBFF] h-full">
-        <Section01 /> 
-        <Section02 />
-        <Section03 />
+      <div className="flex-grow bg-[#FBFBFF]">
+        <Section01 id="home"/>
+        <Section02 id="features"/>
+        <Section03 id="about"/>
         <Section04 />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
-}
+};
 
 export default landingPage;

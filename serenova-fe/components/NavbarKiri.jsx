@@ -21,9 +21,9 @@ const NavbarKiri = () => {
         router.push('/relaxation');
     }
 
-    const handleLogout = async (e) => {
+    const handleLogout = async () => {
         try {
-            const response = await axiosFetch.post('/api/logout');
+            const response = axiosFetch.post('/api/logout');
             const result = response.data;
             if(result.success){
                 cookie.set('token', '', {expires: new Date(0)});

@@ -7,10 +7,15 @@ import DaySoFar from "@components/dashboard/DaySoFar";
 import HeadDashboard from "@components/dashboard/HeadDashboard";
 import IntensityStress from "@components/dashboard/IntensityStress";
 import ListSchedule from "@components/dashboard/ListSchedule";
-import NavbarKiri from "@components/NavbarKiri";
-import NavAtas from "@components/NavAtas"; 
+// import NavbarKiri from "@components/NavbarKiri";
+import NavAtas from "@components/NavAtas";
 import Notification from "@components/dashboard/Notification";
 import ProfilePopup from "@components/dashboard/ProfilePopup";
+import dynamic from "next/dynamic";
+
+const NavbarKiri = dynamic(() => import('@components/NavbarKiri'), {
+    ssr: false,
+});
 
 const Page = () => {
   const [isNotificationOpen, setNotificationOpen] = useState(false);
