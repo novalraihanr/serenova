@@ -1,99 +1,138 @@
+# Serenova - Work-Life Balance Web Application
 
-Serenova is a work-life balance web application designed to help users manage tasks, detect stress levels using AI, and provide relaxation techniques to promote mental well-being. It integrates task management and stress detection features in a simple, user-friendly interface.
+**Serenova** is a web application designed to help you manage tasks, monitor stress levels with AI, and provide personalized relaxation techniques to promote mental well-being. The platform integrates task management and stress detection in a user-friendly interface, encouraging balance between productivity and mental health.
 
-Features
-Task Management: Organize and manage daily tasks with ease.
-AI-Based Stress Detection: Automatically monitor and analyze stress levels based on user activities.
-Relaxation Techniques: Access personalized relaxation suggestions to reduce stress and maintain balance.
+---
 
-Table of Contents
-Features
-Installation
-Usage
-Contributing
-License
+## 🚀 Features
 
-Installation
+- **Task Management**: Easily organize and manage your daily tasks to stay on track.
+- **AI-Based Stress Detection**: Automatically monitor and analyze your stress levels based on activity patterns.
+- **Relaxation Techniques**: Get personalized relaxation suggestions to reduce stress and maintain mental balance.
 
-Prerequisites
+---
+
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Installation](#-installation)
+  - [Prerequisites](#prerequisites)
+  - [Backend Setup (Laravel)](#backend-setup-laravel)
+  - [Frontend Setup (Next.js)](#frontend-setup-nextjs)
+  - [Combined Run](#combined-run)
+- [Usage](#usage)
+
+---
+
+## 💻 Installation
+
+### Prerequisites
+
 Before starting, ensure you have the following installed on your machine:
 
-PHP (>= 7.3)
-Composer
-Node.js (>= 12.x)
-npm
-MySQL (or any other supported database)
-Git
+- PHP (>= 7.3)
+- Composer
+- Node.js (>= 12.x)
+- npm
+- MySQL (or any other supported database)
+- Git
 
-Link Machine Learning
-https://github.com/ghazafm/stress-checker-model.git
+### Link to Machine Learning Model
 
-Backend (Laravel)
+[Stress Checker Model](https://github.com/ghazafm/stress-checker-model.git)
 
-Clone the repository:
-git clone https://github.com/your-username/serenova.git
-cd serenova
+---
 
-Install PHP dependencies:
-composer install
+### Backend Setup (Laravel)
 
-Configure the environment:
-Copy the .env.example file to create your .env file:
-cp .env.example .env
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/serenova.git
+    cd serenova
+    ```
 
-Set your database credentials in the .env file:
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=serenova
-DB_USERNAME=root
-DB_PASSWORD=
+2. **Install PHP dependencies**:
+    ```bash
+    composer install
+    ```
 
-Generate the application key:
-php artisan key:generate
+3. **Configure the environment**:
+    Copy the `.env.example` file to create your `.env` file:
+    ```bash
+    cp .env.example .env
+    ```
 
-Run database migrations:
-php artisan migrate
+4. **Set your database credentials** in the `.env` file:
+    ```ini
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=serenova
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
-Run the backend server:
-php artisan serve
+5. **Generate the application key**:
+    ```bash
+    php artisan key:generate
+    ```
 
-Frontend (Next.js)
+6. **Run database migrations**:
+    ```bash
+    php artisan migrate
+    ```
 
-Navigate to the frontend directory:
-cd frontend
+7. **Run the backend server**:
+    ```bash
+    php artisan serve
+    ```
 
-Install Node.js dependencies:
-npm install
+---
 
-Run the Next.js development server:
-npm run dev
+### Frontend Setup (Next.js)
 
-The app will be running at http://localhost:3000.
+1. Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
 
-Combined Run
+2. **Install Node.js dependencies**:
+    ```bash
+    npm install
+    ```
 
-To run both backend and frontend, you can open two terminal windows:
+3. **Run the Next.js development server**:
+    ```bash
+    npm run dev
+    ```
 
-In the first terminal window, run the Laravel backend with:
-php artisan serve
+    The app will be running at [http://localhost:3000](http://localhost:3000).
 
-In the second terminal window, navigate to the frontend and run:
-cd frontend
-npm run dev
+---
 
-Usage
+### Combined Run
 
-Once both the backend and frontend servers are running, you can access Serenova at http://localhost:3000.
+To run both the backend and frontend:
 
-Use the Task Management feature to plan your day.
-Check your stress levels with the Stress Checker powered by AI.
-Access Relaxation Techniques to keep stress in balance.
+1. **In the first terminal window**, run the Laravel backend:
+    ```bash
+    php artisan serve
+    ```
 
-Contributing
+2. **In the second terminal window**, navigate to the frontend and run:
+    ```bash
+    cd frontend
+    npm run dev
+    ```
 
-If you wish to contribute to Serenova, feel free to create pull requests or raise issues in the repository. We welcome all contributions to improve the platform.
+---
 
-License
+## 🖥️ Usage
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+Once both the backend and frontend servers are running, you can access Serenova at [http://localhost:3000](http://localhost:3000).
+
+- Use the **Task Management** feature to organize your daily tasks.
+- Check your **stress levels** using the AI-powered Stress Checker.
+- Access **Relaxation Techniques** to help reduce stress and maintain balance.
+
+---
